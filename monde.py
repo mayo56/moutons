@@ -1,6 +1,8 @@
 """
 Ce module contient la classe du monde où évoluent les moutons.
 """
+from time import sleep
+
 
 class Monde:
     """
@@ -11,14 +13,14 @@ class Monde:
 
         # Attribut duree_repousse
         self.duree_repousse = duree_repousse
-        
+
         # Creation du monde
         self.carte = []
         for y in range(dimension): # y de la carte
             self.carte.append([])
             for _ in range(dimension): # x de la carte
                 self.carte[y].append(0)
-    
+
     def __init_value_verification(self, duree_repousse:int, dimension:int):
         """
         Fonction permettant de verifier les parametres de la classe.
@@ -31,7 +33,7 @@ class Monde:
         # Vérification des types
         if not isinstance(duree_repousse, int):
             raise ValueError("Le paramètre \"duree_repousse\" doit etre un integer.")
-        elif not isinstance(dimension, int):
+        if not isinstance(dimension, int):
             raise ValueError("Le parametre \"dimension\" doit etre un integer.")
         
         # Vérification des valeurs
@@ -41,19 +43,36 @@ class Monde:
             raise ValueError("\"duree_repousse\" doit etre superieur ou egal a 50.")
     
     def herbePousse(self):
-        pass
+        """
+        Fonction qui fait pousser l'herbe
+        """
+        for indice_y, y in enumerate(self.carte):
+            for indice_x, _ in enumerate(y):
+                self.carte[indice_y][indice_x] += 1
     
-    def herbeMange(self, x:int, y:int):
+    def herbeMange(self, x:int, y:int) -> None:
         """
         Manger de l'herbe à l'endroit x;y
         """
-        pass
+        self.carte[y][x] = 0        
 
-    def nbHerbe(self):
+    def nbHerbe(self) -> None:
         """
         Nombre de carré d'herbe sur la carte
         """
-        pass
+        nombre_herbe = 0
+        for _, y in enumerate(self.carte):
+            for _, x in enumerate(y):
+                if x >= self.duree_repousse:
+                    nombre_herbe += 1
+        return nombre_herbe
 
-    
 mon_monde = Monde(52,50)
+print(2500**2)
+
+for i in range(60):
+    mon_monde.herbePousse()
+    print(mon_monde.carte[0])
+    sleep(1)
+
+print(mon_monde.nbHerbe())
