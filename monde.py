@@ -1,14 +1,12 @@
 """
 Ce module contient la classe du monde où évoluent les moutons.
 """
-from time import sleep
-
 
 class Monde:
     """
     Cette classe est la carte sur laquelle évoluent les moutons.
     """
-    def __init__(self, duree_repousse:int, dimension=50):
+    def __init__(self, duree_repousse:int, dimension=50) -> None:
         self.__init_value_verification(duree_repousse, dimension)
 
         # Attribut duree_repousse
@@ -21,7 +19,7 @@ class Monde:
             for _ in range(dimension): # x de la carte
                 self.carte[y].append(0)
 
-    def __init_value_verification(self, duree_repousse:int, dimension:int):
+    def __init_value_verification(self, duree_repousse:int, dimension:int) -> None:
         """
         Fonction permettant de verifier les parametres de la classe.
         | NOM | TYPE | VALEUR | 
@@ -42,9 +40,10 @@ class Monde:
         if dimension < 50:
             raise ValueError("\"duree_repousse\" doit etre superieur ou egal a 50.")
     
-    def herbePousse(self):
+    def herbePousse(self) -> None:
         """
-        Fonction qui fait pousser l'herbe
+        Fonction permettant de faire pousser l'herbe sur la carte.
+        Ajoute 1 à chaque case de la carte.
         """
         for indice_y, y in enumerate(self.carte):
             for indice_x, _ in enumerate(y):
@@ -52,13 +51,15 @@ class Monde:
     
     def herbeMange(self, x:int, y:int) -> None:
         """
-        Manger de l'herbe à l'endroit x;y
+        Fonction permettant de supprimer l'herbe mangée (par un mouton).
+        Met la case d'herbe mangé à 0. (A la position x;y)
         """
-        self.carte[y][x] = 0        
+        self.carte[y][x] = 0
 
-    def nbHerbe(self) -> None:
+    def nbHerbe(self) -> int:
         """
-        Nombre de carré d'herbe sur la carte
+        Fonction permettant de savoir le nombre de case d'herbe disponible sur la carte.
+        Renvoie le nombre de case d'herbe disponible de type integer.
         """
         nombre_herbe = 0
         for _, y in enumerate(self.carte):
@@ -67,12 +68,3 @@ class Monde:
                     nombre_herbe += 1
         return nombre_herbe
 
-mon_monde = Monde(52,50)
-print(2500**2)
-
-for i in range(60):
-    mon_monde.herbePousse()
-    print(mon_monde.carte[0])
-    sleep(1)
-
-print(mon_monde.nbHerbe())

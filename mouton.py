@@ -1,22 +1,23 @@
-from random import *
+"""
+Module contenant la classe des moutons.
+"""
+
+from random import randint
+
 class Mouton:
     """
-    lol
+    Classe du mouton.
     """
-    def __init__(self,dimension,variationEnergie,position,energie,taux_reproduction):
+    def __init__(self, dimension):
         """
         Constructeur
         """
-        self.dimension = dimension
-        self.variationEnergie = variationEnergie # gain d'energie apporte par la consommation d'un carre d'herbe
-        self.position = position # couple d'entiers indiquant les coordonnees de la case de la carte occupee par le mouton
-        self.energie = energie # entier positif(ou nul), quand l'energie d'un mouton = 0 il meurt et l'objet est supprime
-        self.taux_reproduction = taux_reproduction # entier compris entre 1 et 100, % de chance qu'un mouton se reproduise
+        self.dimenson = dimension # On met les params dans self
+        self.gain_nourriture = 4
+        self.energie = (randint(1,2) * self.gain_nourriture)
+        self.taux_reproduction = 4
 
-    def __init_value_verification(self,dimension,variationEnergie,position,energie,taux_reproduction):
-        pass
-
-    def variation_energie(self):
+    def variationEnergie(self):
         """
         mdr
         """

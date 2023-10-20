@@ -1,8 +1,8 @@
 class Simulation:
     
-    def __init__(self,nombre_moutons,horloge,fin_du_monde,moutons,monde,resultats_herbe,resultats_moutons):
+    def __init__(self, nombre_moutons, fin_du_monde, moutons, monde, resultats_herbe, resultats_moutons):
         self.nombre_moutons = nombre_moutons
-        self.horloge = horloge
+        self.horloge = 0
         self.fin_du_monde = fin_du_monde
         self.moutons = moutons
         self.monde = monde
