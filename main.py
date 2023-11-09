@@ -1,7 +1,7 @@
 class Simulation:
     
-    def __init__(self, nombre_mutons):
-        self.nombre_moutons = nombre_mutons
+    def __init__(self, nombre_moutons):
+        self.nombre_moutons = nombre_moutons
         self.mouton = [
             
         ]
