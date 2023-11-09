@@ -7,7 +7,13 @@ class Monde:
     Cette classe est la carte sur laquelle évoluent les moutons.
     """
     def __init__(self, duree_repousse:int, dimension=50) -> None:
-        self.__init_value_verification(duree_repousse, dimension)
+        # Vérification des types
+        assert isinstance(duree_repousse, int), ValueError("Le paramètre \"duree_repousse\" doit etre un integer.")
+        assert isinstance(dimension, int), ValueError("Le parametre \"dimension\" doit etre un integer.")
+
+        # Vérification des valeurs
+        assert duree_repousse > 1 or duree_repousse < 100, ValueError("\"duree_repousse\" doit etre compris entre 1 et 100.")
+        assert dimension >= 50, ValueError("\"duree_repousse\" doit etre superieur ou egal a 50.")
 
         # Attribut duree_repousse
         self.duree_repousse = duree_repousse
@@ -18,27 +24,6 @@ class Monde:
             self.carte.append([])
             for _ in range(dimension): # x de la carte
                 self.carte[y].append(0)
-
-    def __init_value_verification(self, duree_repousse:int, dimension:int) -> None:
-        """
-        Fonction permettant de verifier les parametres de la classe.
-        | NOM | TYPE | VALEUR | 
-        | :---- | :----: | -----: |
-        | duree_repousse | int | Entre 1 et 100 |
-        | dimension | int | Superieur ou egal a 50 |
-
-        """
-        # Vérification des types
-        if not isinstance(duree_repousse, int):
-            raise ValueError("Le paramètre \"duree_repousse\" doit etre un integer.")
-        if not isinstance(dimension, int):
-            raise ValueError("Le parametre \"dimension\" doit etre un integer.")
-        
-        # Vérification des valeurs
-        if duree_repousse < 1 or duree_repousse > 100:
-            raise ValueError("\"duree_repousse\" doit etre compris entre 1 et 100.")
-        if dimension < 50:
-            raise ValueError("\"duree_repousse\" doit etre superieur ou egal a 50.")
     
     def herbePousse(self) -> None:
         """
@@ -67,4 +52,3 @@ class Monde:
                 if x >= self.duree_repousse:
                     nombre_herbe += 1
         return nombre_herbe
-
