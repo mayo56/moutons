@@ -3,6 +3,7 @@ Module contenant la classe des moutons.
 """
 
 from random import randint
+from typing import Tuple
 
 
 # Constante contenant tous les déplacements selon l'orientation
@@ -32,26 +33,31 @@ class Mouton:
     Classe du mouton.
     """
 
-    def __init__(self, position:tuple, dimension=50):
+    def __init__(self, position:Tuple[int, int], dimension=50):
         """
         Constructeur
         """
+        assert isinstance(position, Tuple), "Position doit être un tuple."
+        assert len(position) == 2, "Position doit contenir deux coordonnées: (x, y)"
+        assert isinstance(position[0], int) and isinstance(position[1], int), "Position doit contenir des integers. (int, int)"
+
         self.dimenson = dimension  # On met les params dans self
         self.gain_nourriture = 4
         self.energie = randint(1, 2) * self.gain_nourriture
         self.taux_reproduction = 4
         self.position = position # (x,y)
 
-    def variationEnergie(self, first:bool, onPatchOfGrass: bool) -> int :
+    def variationEnergie(self, first:bool, onPatchOfGrass: bool) -> int | None:
         """
         Fonction qui ajoute ou enlève de l'énergie au mouton.
-        
         """
         if onPatchOfGrass:
             if first:
                 self.energie += self.gain_nourriture
                 return self.energie
         self.energie -= 1
+        if self.energie == 0:
+            return None
         return self.energie
 
         
@@ -86,6 +92,3 @@ class Mouton:
         
         # On attribut les nouvelles valeurs
         self.position = new_positions
-
-mon_mouton = Mouton(50)
-mon_mouton.deplacement()

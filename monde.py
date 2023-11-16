@@ -18,7 +18,7 @@ class Monde:
         # Attribut duree_repousse
         self.duree_repousse = duree_repousse
 
-        # Creation du monde
+        # Creation du monde. Useage: carte[y][x]
         self.carte = []
         for y in range(dimension): # y de la carte
             self.carte.append([])
