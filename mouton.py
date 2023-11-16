@@ -32,19 +32,18 @@ class Mouton:
     """
     Classe du mouton.
     """
-
     def __init__(self, position:Tuple[int, int], dimension=50):
         """
         Constructeur
         """
-        assert isinstance(position, Tuple), "Position doit être un tuple."
-        assert len(position) == 2, "Position doit contenir deux coordonnées: (x, y)"
-        assert isinstance(position[0], int) and isinstance(position[1], int), "Position doit contenir des integers. (int, int)"
+        assert isinstance(position, Tuple), ValueError("Position doit être un tuple.")
+        assert len(position) == 2, ValueError("Position doit contenir deux coordonnées: (x, y)")
+        assert isinstance(position[0], int) and isinstance(position[1], int), ValueError("Position doit contenir des integers. (int, int)")
 
         self.dimenson = dimension  # On met les params dans self
         self.gain_nourriture = 4
         self.energie = randint(1, 2) * self.gain_nourriture
-        self.taux_reproduction = 4
+        self.taux_reproduction = randint(1,100)
         self.position = position # (x,y)
 
     def variationEnergie(self, first:bool, onPatchOfGrass: bool) -> int | None:

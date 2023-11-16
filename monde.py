@@ -17,6 +17,7 @@ class Monde:
 
         # Attribut duree_repousse
         self.duree_repousse = duree_repousse
+        self.dimension = dimension
 
         # Creation du monde. Useage: carte[y][x]
         self.carte = []
