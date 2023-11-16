@@ -6,5 +6,6 @@
 - [ ] SimMouton (A finir)
 (Trouver un moyen de simplifier la reproduction)
 - [x] Horloge, herbe, variationEnergie
-- [ ] Reproduction des moutons, deplacer les moutons
+- [ ] Reproduction des moutons,
+- [x] deplacer les moutons
 - [ ] Sauvegarder les resultats

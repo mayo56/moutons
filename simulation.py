@@ -79,7 +79,8 @@ class Simulation:
         #----+----+----+----+----+----+----+----+----+----#
         #                   Deplaceent                    #
         #----+----+----+----+----+----+----+----+----+----#
-        # ...
+        for mouton in self.moutons:
+            mouton.deplacement()
 
         #----+----+----+----+----+----+----+----+----+----#
         #             Sauvegarde des données              #
