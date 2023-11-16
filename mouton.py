@@ -5,7 +5,7 @@ Module contenant la classe des moutons.
 from random import randint
 
 
-# Variable aléatoire pour le déplacement
+# Constante contenant tous les déplacements selon l'orientation
 # 1 : Nord (Haut)
 # 2 : Nord Ouest
 # 3 : Ouest (Gauche)
@@ -32,7 +32,7 @@ class Mouton:
     Classe du mouton.
     """
 
-    def __init__(self, dimension=50):
+    def __init__(self, position:tuple, dimension=50):
         """
         Constructeur
         """
@@ -40,15 +40,23 @@ class Mouton:
         self.gain_nourriture = 4
         self.energie = randint(1, 2) * self.gain_nourriture
         self.taux_reproduction = 4
-        self.position = (49, 49) # (x,y)
+        self.position = position # (x,y)
 
-    def variationEnergie(self, first:bool, ):
+    def variationEnergie(self, first:bool, onPatchOfGrass: bool) -> int :
         """
-        mdr
+        Fonction qui ajoute ou enlève de l'énergie au mouton.
+        
         """
-        pass
+        if onPatchOfGrass:
+            if first:
+                self.energie += self.gain_nourriture
+                return self.energie
+        self.energie -= 1
+        return self.energie
 
-    def deplacement(self):
+        
+
+    def deplacement(self) -> None:
         """
         Fonction permettant au mouton de se mouvoir sur le monde.
         """
