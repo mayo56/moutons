@@ -11,7 +11,6 @@ class Simulation:
     Classe de simulation
     """
     def __init__(self, nombre_moutons, dimension=50, fin_du_monde=1000):
-
         # Elements physique
         self.nombre_moutons = nombre_moutons
         self.moutons = [
@@ -46,7 +45,7 @@ class Simulation:
                     True,
                     self.monde.carte[mon_mouton.position[1]][mon_mouton.position[0]] > self.monde.duree_repousse
                 )
-            # Si l'énergie est Nne
+            # Si l'énergie est None
             if energie == None:
                 all_position[str_position] -= 1 # On supprime sa position
                 self.moutons.pop(index) # Et son instance dans l'attribut mouton
@@ -71,6 +70,22 @@ class Simulation:
             str_position = str(mon_mouton.position[0]) + "," + str(mon_mouton.position[1])
             # Variation energie
             self._variation_energie(all_position, mon_mouton, str_position, i)
+
+        #----+----+----+----+----+----+----+----+----+----#
+        #              Reproduction moutons               #
+        #----+----+----+----+----+----+----+----+----+----#
+        # ...
+        
+        #----+----+----+----+----+----+----+----+----+----#
+        #                   Deplaceent                    #
+        #----+----+----+----+----+----+----+----+----+----#
+        # ...
+
+        #----+----+----+----+----+----+----+----+----+----#
+        #             Sauvegarde des données              #
+        #----+----+----+----+----+----+----+----+----+----#
+        # ...
+        
             
             
         
