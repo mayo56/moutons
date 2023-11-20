@@ -49,7 +49,7 @@ class Simulation:
                 dimension
             ) for _ in range(self.nombre_moutons)
         ]
-        self.monde:Monde = Monde(50, dimension)
+        self.monde:Monde = Monde(2, dimension)
 
         # Elements lie au temp
         self.horloge:int = 0
