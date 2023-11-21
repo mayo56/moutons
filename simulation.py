@@ -143,6 +143,7 @@ class Simulation:
         ```py
         sim = Simulation(10)
         sim.simMouton()
+        ```
         """
         while self.horloge < self.fin_du_monde and self.nombre_moutons > 0:
             self.horloge += 1
