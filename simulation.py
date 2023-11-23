@@ -4,7 +4,8 @@ Module de simulation
 
 from mouton import Mouton
 from monde import Monde
-from random import randint
+from random import randint, choices
+import math as m
 
 class Simulation:
     """
@@ -72,31 +73,35 @@ class Simulation:
         """
         remove_mouton:list[int] = []
 
-        for index in range(self.nombre_moutons):
-            mon_mouton:Mouton = self.moutons[index] # Notre mouton
-            position:str = str(mon_mouton.position[0]) + "," + str(mon_mouton.position[1]) # Sa position en str
+        # Variable qui permet de gerer la difference d'index
+        # quand les moutons précédents sont supprimés
+        diff_index_were_is_remove = 0
+
+        for index, mouton in enumerate(self.moutons):
+            position:str = str(mouton.position[0]) + "," + str(mouton.position[1]) # Sa position en str
             energie:None | int = None # Son energie
-            pathOfGrass:bool = self.monde.carte[mon_mouton.position[1]][mon_mouton.position[0]] > self.monde.duree_repousse # Est-il sur un carre d'herbe herbus
+            pathOfGrass:bool = self.monde.carte[mouton.position[1]][mouton.position[0]] > self.monde.duree_repousse # Est-il sur un carre d'herbe herbus
 
             # Si la position existe
             if all_position.keys().__contains__(position):
-                energie = mon_mouton.variationEnergie(
+                energie = mouton.variationEnergie(
                     len(all_position[position]) < 1, # S'il est seul: reçoit de l'energie
                     pathOfGrass
                 )
             # Sinon on la créer
             else:
                 all_position[position] = []
-                energie = mon_mouton.variationEnergie(True, pathOfGrass)
+                energie = mouton.variationEnergie(True, pathOfGrass)
             # On mange le carré d'herbe s'il existe
             if pathOfGrass:
-                self.monde.herbeMange(mon_mouton.position[0], mon_mouton.position[1])
+                self.monde.herbeMange(mouton.position[0], mouton.position[1])
 
             # Si l'énergie est None
             if energie == None:
                 remove_mouton.append(index) # On l'ajoute à la liste des moutons à enlever
+                diff_index_were_is_remove += 1
             else:
-                all_position[position].append(index) # On l'ajoute à la liste des moutons
+                all_position[position].append(index - diff_index_were_is_remove) # On l'ajoute à la liste des moutons
         return remove_mouton
         
 
@@ -123,14 +128,22 @@ class Simulation:
 
         for couple in reproduction_position: # Boucle sur les positions
             le_couple:list[int] = couple[2]
-            # /!\
-            # /!\ [À Modif car pas bon] /!\
-            # /!\           |
-            # /!\           | Ce qui suit
-            # /!\           v
-            if self.moutons[le_couple[0]].taux_reproduction == randint(1,100) and self.moutons[le_couple[1]].taux_reproduction == randint(1,100):
+
+            # ---- Taux de reproduction ------
+            taux_de_reproduction: tuple[int, int] = (
+                self.moutons[le_couple[0]].taux_reproduction,
+                self.moutons[le_couple[1]].taux_reproduction,
+            )
+            reproduction: tuple[bool, bool] = (
+                bool(choices([0,1], weights=[100 - taux_de_reproduction[0], taux_de_reproduction[0]], k=1)[0]),
+                bool(choices([0,1], weights=[100 - taux_de_reproduction[1], taux_de_reproduction[1]], k=1)[0]),
+            )
+            # ----                     ------
+
+            # Si reproduction possible, on créer un mouton
+            if reproduction[0] and reproduction[1]:
                 self.moutons.append(Mouton((couple[0], couple[1]), self.monde.dimension))
-            
+                self.nombre_moutons += 1            
 
     def simMouton(self) -> list[list[int], list[int]]:
         """
@@ -146,6 +159,7 @@ class Simulation:
         ```
         """
         while self.horloge < self.fin_du_monde and self.nombre_moutons > 0:
+            print(str(int((self.horloge / self.fin_du_monde) * 100)) + "%", end="\r")
             self.horloge += 1
             self.monde.herbePousse()
 
