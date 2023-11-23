@@ -149,7 +149,9 @@ class Simulation:
             # Si reproduction possible, on créer un mouton
             if reproduction[0] and reproduction[1]:
                 self.moutons.append(Mouton((couple[0], couple[1]), self.monde.dimension))
-                self.nombre_moutons += 1            
+                self.nombre_moutons += 1
+                for index in le_couple: # Division de l'énergie par 2
+                    self.moutons[index].energie //= 2
 
     def simMouton(self) -> list[list[int], list[int]]:
         """
