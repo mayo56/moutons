@@ -1,14 +1,14 @@
 """
-Fichier principale.
-Fichier utilisant la classe Simulation.
+Ce fichier contient les instructions de démarrage
+de la smulation avec les moutons.
 """
 
 from simulation import Simulation
 
-sim = Simulation(
-    nombre_moutons=20,
+sim:Simulation = Simulation(
+    nombre_moutons=50,
     dimension=50,
     fin_du_monde=100
 )
-print()
+print("[[Moutons], [Herbe]]")
 print(sim.simMouton())

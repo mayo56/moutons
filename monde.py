@@ -1,5 +1,21 @@
 """
-Module pour la classe Monde.
+Ce module contient la classe Monde pour la simulation avec les moutons.
+
+# Methodes
+
+herbePousse()
+-------------
+    Fait pousser de l'herbe sur chaque case de la carte.
+    (La case devient herbus quand le nombre dans la case est supperieur ou égal à la durre_repousse)
+
+herbeMange(x, y)
+----------------
+    Permet à un mouton de manger une case herbus sur la carte à l'emplacement (x, y).
+
+nbHerbe()
+---------
+    Renvoi le nombre de case herbus sur la carte.
+    (Principalement conçut pour des résultats ou stats).
 """
 
 class Monde:

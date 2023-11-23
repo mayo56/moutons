@@ -7,5 +7,8 @@
 - [x] deplacer les moutons
 - [x] Sauvegarder les resultats
 - [x] Commenter le code
-- [ ] Simulation (À 90%)
-- [ ] Reproduction des moutons (problème compréhension)
+- [x] Simulation (À 100%)
+- [x] Reproduction des moutons
+
+# Remarque
+Il faudrait 

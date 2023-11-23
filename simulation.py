@@ -1,11 +1,17 @@
 """
-Module de simulation
+Ce module contient la class de simulaton avec les moutons.
+
+# Methodes
+
+simMouton()
+-----------
+    Pour lancer la simulation.
+    Renvoie une lste avec les données receuillis.
 """
 
 from mouton import Mouton
 from monde import Monde
 from random import randint, choices
-import math as m
 
 class Simulation:
     """
@@ -127,16 +133,16 @@ class Simulation:
                 reproduction_position.append([int(position[0]), int(position[1]), value[0:2]]) # Ajout [ x, y, [index_1, index_2] ]
 
         for couple in reproduction_position: # Boucle sur les positions
-            le_couple:list[int] = couple[2]
+            le_couple:list[int] = couple[2] # [index_1, index_]
 
             # ---- Taux de reproduction ------
             taux_de_reproduction: tuple[int, int] = (
-                self.moutons[le_couple[0]].taux_reproduction,
-                self.moutons[le_couple[1]].taux_reproduction,
+                self.moutons[le_couple[0]].taux_reproduction, # mouton 1
+                self.moutons[le_couple[1]].taux_reproduction, # mouton 2
             )
             reproduction: tuple[bool, bool] = (
-                bool(choices([0,1], weights=[100 - taux_de_reproduction[0], taux_de_reproduction[0]], k=1)[0]),
-                bool(choices([0,1], weights=[100 - taux_de_reproduction[1], taux_de_reproduction[1]], k=1)[0]),
+                bool(choices([0,1], weights=[100 - taux_de_reproduction[0], taux_de_reproduction[0]], k=1)[0]), # reussite mouton 1
+                bool(choices([0,1], weights=[100 - taux_de_reproduction[1], taux_de_reproduction[1]], k=1)[0]), # reussite mouton 2
             )
             # ----                     ------
 
@@ -159,7 +165,10 @@ class Simulation:
         ```
         """
         while self.horloge < self.fin_du_monde and self.nombre_moutons > 0:
+            # ---- Affichage progression -------
             print(str(int((self.horloge / self.fin_du_monde) * 100)) + "%", end="\r")
+            # ----------------------------------
+
             self.horloge += 1
             self.monde.herbePousse()
 
@@ -173,9 +182,9 @@ class Simulation:
             #----+----+----+----+----+----+----+----+----+----#
             #              Variation d'énergie                #
             #----+----+----+----+----+----+----+----+----+----#
-            remove_mouton = self._variation_energie(all_position)
+            remove_mouton:list[int] = self._variation_energie(all_position)
             remove_mouton.reverse()
-            for index in remove_mouton: # Supprime les moutons morts
+            for index in remove_mouton: # On supprime les moutons morts
                 self.moutons.pop(index)
                 self.nombre_moutons -= 1
 
@@ -193,7 +202,7 @@ class Simulation:
             #----+----+----+----+----+----+----+----+----+----#
             #             Sauvegarde des données              #
             #----+----+----+----+----+----+----+----+----+----#
-            self.resultat_herbe.append(self.monde.nbHerbe())
-            self.resultat_moutons.append(self.nombre_moutons)
+            self.resultat_herbe.append(self.monde.nbHerbe()) # resultats herbe
+            self.resultat_moutons.append(self.nombre_moutons) # resultat moutons
 
         return [self.resultat_moutons, self.resultat_herbe]

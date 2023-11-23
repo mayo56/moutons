@@ -1,5 +1,16 @@
 """
-Module contenant la classe des moutons.
+Ce module contient la classe Mouton pour la simulation.
+
+# Methodes
+
+variationEnergie()
+------------------
+    Permet de faire varier l'energie du monton (monte à + gain_energie) ou le fait
+    descendre de 1. S'il est à zéro (None), il meurt.
+
+deplacement()
+-------------
+    Permet au mouton de se déplacer sur la carte (Monde).
 """
 
 from random import randint
@@ -13,7 +24,7 @@ from random import randint
 # 6 : Sud Ouest
 # 7 : Est (Droite)
 # 8 : Sud Est
-_DEPLACEMENT_MATRICE = {
+_DEPLACEMENT_MATRICE: dict[str, tuple[int, int]] = {
     # [x,y]
     "1": (1,0),
     "2": (1,-1),
