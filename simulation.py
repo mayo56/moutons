@@ -18,7 +18,7 @@ class Simulation:
     Classe de simulation. Permet de générer une simulation contenant un monde et des moutons.
     Il permet de retourner des resultat sur la vie des moutons dans le monde.
     """
-    def __init__(self, nombre_moutons:int, dimension:int=50, fin_du_monde:int=10) -> None:
+    def __init__(self, nombre_moutons, dimension=50, fin_du_monde=10):
         """
         Génère une simulation contenant un monde de dimension (dimension x dimension) et
         contenant le nombre de mouton demande. La simulation de passe en batement d'horloge
@@ -49,24 +49,24 @@ class Simulation:
 
 
         # Elements physique
-        self.nombre_moutons:int = nombre_moutons
-        self.moutons:list[Mouton] = [
+        self.nombre_moutons = nombre_moutons
+        self.moutons = [
             Mouton(
                 (randint(0, dimension - 1), randint(0, dimension - 1)), # Position aléatoire
                 dimension
             ) for _ in range(self.nombre_moutons)
         ]
-        self.monde:Monde = Monde(2, dimension)
+        self.monde = Monde(2, dimension)
 
         # Elements lie au temp
-        self.horloge:int = 0
-        self.fin_du_monde:int = fin_du_monde
+        self.horloge = 0
+        self.fin_du_monde = fin_du_monde
         
         # Elements de stats
-        self.resultat_herbe:list = []
-        self.resultat_moutons:list = []
+        self.resultat_herbe = []
+        self.resultat_moutons = []
 
-    def _variation_energie(self, all_position: dict[str, list[int]]) -> list[int]:
+    def _variation_energie(self, all_position):
         """
         * Methode privée.
         * Retourne la liste des moutons qui sont à court d'energie (`list[int]`).
@@ -77,16 +77,16 @@ class Simulation:
         Methode permetant de faire varier l'energie de tous les moutons et renvoyer les index de chaque moutons
         n'ayant plus d'energie.
         """
-        remove_mouton:list[int] = []
+        remove_mouton = []
 
         # Variable qui permet de gerer la difference d'index
         # quand les moutons précédents sont supprimés
         diff_index_were_is_remove = 0
 
         for index, mouton in enumerate(self.moutons):
-            position:str = str(mouton.position[0]) + "," + str(mouton.position[1]) # Sa position en str
-            energie:None | int = None # Son energie
-            pathOfGrass:bool = self.monde.carte[mouton.position[1]][mouton.position[0]] > self.monde.duree_repousse # Est-il sur un carre d'herbe herbus
+            position = str(mouton.position[0]) + "," + str(mouton.position[1]) # Sa position en str
+            energie = None # Son energie
+            pathOfGrass = self.monde.carte[mouton.position[1]][mouton.position[0]] > self.monde.duree_repousse # Est-il sur un carre d'herbe herbus
 
             # Si la position existe
             if all_position.keys().__contains__(position):
@@ -111,7 +111,7 @@ class Simulation:
         return remove_mouton
         
 
-    def _reproduction(self, all_position: dict[str, list[Mouton]]) -> None:
+    def _reproduction(self, all_position) -> None:
         """
         * Methode privée.
         * Ne retourne rien.
@@ -125,22 +125,22 @@ class Simulation:
         # [
         #     [x, y, [index_1, index_2]]
         # ]
-        reproduction_position: list[list[int, int, list[int, int]]] = []
+        reproduction_position = []
 
         for key, value in all_position.items():
             if len(value) >= 2:
-                position:list[str, str] = key.split(",") # On coupe la position "x,y" -> ["x", "y"]
+                position = key.split(",") # On coupe la position "x,y" -> ["x", "y"]
                 reproduction_position.append([int(position[0]), int(position[1]), value[0:2]]) # Ajout [ x, y, [index_1, index_2] ]
 
         for couple in reproduction_position: # Boucle sur les positions
-            le_couple:list[int] = couple[2] # [index_1, index_]
+            le_couple = couple[2] # [index_1, index_]
 
             # ---- Taux de reproduction ------
-            taux_de_reproduction: tuple[int, int] = (
+            taux_de_reproduction = (
                 self.moutons[le_couple[0]].taux_reproduction, # mouton 1
                 self.moutons[le_couple[1]].taux_reproduction, # mouton 2
             )
-            reproduction: tuple[bool, bool] = (
+            reproduction = (
                 bool(choices([0,1], weights=[100 - taux_de_reproduction[0], taux_de_reproduction[0]], k=1)[0]), # reussite mouton 1
                 bool(choices([0,1], weights=[100 - taux_de_reproduction[1], taux_de_reproduction[1]], k=1)[0]), # reussite mouton 2
             )
@@ -153,7 +153,7 @@ class Simulation:
                 for index in le_couple: # Division de l'énergie par 2
                     self.moutons[index].energie //= 2
 
-    def simMouton(self) -> list[list[int], list[int]]:
+    def simMouton(self):
         """
         * Retourne les listes de resulatat des moutons et des herbes (`list[list[int], list[int]]`)
         * Ne prend aucun paramètres.
@@ -179,12 +179,12 @@ class Simulation:
             #   "x,y": [int, ...]
             #   ...
             # }
-            all_position:dict[str, list[int]] = {}
+            all_position = {}
 
             #----+----+----+----+----+----+----+----+----+----#
             #              Variation d'énergie                #
             #----+----+----+----+----+----+----+----+----+----#
-            remove_mouton:list[int] = self._variation_energie(all_position)
+            remove_mouton = self._variation_energie(all_position)
             remove_mouton.reverse()
             for index in remove_mouton: # On supprime les moutons morts
                 self.moutons.pop(index)

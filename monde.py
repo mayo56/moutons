@@ -23,7 +23,7 @@ class Monde:
     Classe du monde. Permet de générer un monde sur une dimension demander.
     Le monde contient de l'herbe qui peut pousser.
     """
-    def __init__(self, duree_repousse:int, dimension:int=50) -> None:
+    def __init__(self, duree_repousse, dimension=50):
         """
         Génère un monde en deux dimensions de forme carré (dimension x dimension) et
         d'avoir de l'herbe sur chaque case poussant tout les duree_repouse temps.
@@ -47,11 +47,11 @@ class Monde:
         assert dimension >= 50, ValueError("\"duree_repousse\" doit etre superieur ou egal a 50.")
 
         # Attribut 
-        self.duree_repousse:int = duree_repousse
-        self.dimension:int = dimension
+        self.duree_repousse = duree_repousse
+        self.dimension = dimension
 
         # Creation du monde. Useage: carte[y][x]
-        self.carte:list[list[int]] = []
+        self.carte = []
         for y in range(dimension): # y de la carte
             self.carte.append([])
             for _ in range(dimension): # x de la carte
@@ -75,7 +75,7 @@ class Monde:
             for indice_x, _ in enumerate(y): # boucle sur les x
                 self.carte[indice_y][indice_x] += 1 # Ajout de l'herbe (+1)
     
-    def herbeMange(self, x:int, y:int) -> None:
+    def herbeMange(self, x, y):
         """
         * Ne retourne rien.
         
@@ -98,7 +98,7 @@ class Monde:
         # Met à zéro le carré demandé
         self.carte[y][x] = 0
 
-    def nbHerbe(self) -> int:
+    def nbHerbe(self):
         """
         * Retourne le nombre de carré d'herbe herbus. (int)
         * Ne prend aucun paramètres.
@@ -113,7 +113,7 @@ class Monde:
         # >>> 20
         ```
         """
-        nombre_herbe:int = 0
+        nombre_herbe = 0
         for _, y in enumerate(self.carte): # Boucle sur les y
             for _, x in enumerate(y): # Boucle sur les x
                 if x >= self.duree_repousse:

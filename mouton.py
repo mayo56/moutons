@@ -24,7 +24,7 @@ from random import randint
 # 6 : Sud Ouest
 # 7 : Est (Droite)
 # 8 : Sud Est
-_DEPLACEMENT_MATRICE: dict[str, tuple[int, int]] = {
+_DEPLACEMENT_MATRICE = {
     # [x,y]
     "1": (1,0),
     "2": (1,-1),
@@ -41,7 +41,7 @@ class Mouton:
     Classe des Mouton. Permet de générer un mouton ayant une position sur une carte.
     Il peut se déplacer et varier son énergie.
     """
-    def __init__(self, position:tuple[int, int], dimension:int=50):
+    def __init__(self, position, dimension=50):
         """
         Génère un mouton sur une carte de dimension (dimension x dimension)
         à une position donnée (x ; y).
@@ -63,13 +63,13 @@ class Mouton:
         assert isinstance(position[0], int) and isinstance(position[1], int), TypeError("Position doit contenir des integers. (int, int)")
         assert dimension > 0, ValueError("Le paramaètre \"dimension\" doit être plus grand que 0.")
 
-        self.dimenson:int = dimension  # On met les params dans self
-        self.gain_nourriture:int = 4
-        self.energie:int = randint(1, 2) * self.gain_nourriture
-        self.taux_reproduction:int = randint(1,100)
-        self.position:tuple[int, int] = position # (x,y) 
+        self.dimenson = dimension  # On met les params dans self
+        self.gain_nourriture = 4
+        self.energie = randint(1, 2) * self.gain_nourriture
+        self.taux_reproduction = randint(1,100)
+        self.position = position # (x,y) 
 
-    def variationEnergie(self, first:bool, onPatchOfGrass: bool) -> int | None:
+    def variationEnergie(self, first, onPatchOfGrass):
         """
         * Retourn l'energie du mouton (`int`) ou `None`.
 
@@ -119,9 +119,9 @@ class Mouton:
         ```
         """
         # constante ayant les valeurs de déplacement du mouton
-        DIRECTION_DEPLACEMENT:list[int, int] = _DEPLACEMENT_MATRICE[str(randint(1, 8))]
+        DIRECTION_DEPLACEMENT = _DEPLACEMENT_MATRICE[str(randint(1, 8))]
         # (x,y)
-        new_positions:tuple[int, int] = (
+        new_positions = (
             self.position[0] + DIRECTION_DEPLACEMENT[0], # x
             self.position[1] + DIRECTION_DEPLACEMENT[1]  # y
         )
